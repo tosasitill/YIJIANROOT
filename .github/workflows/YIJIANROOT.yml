@@ -59,7 +59,8 @@ jobs:
           mv ~/XIUBU/done/ ./
           git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
           cd ..
-          7z a -tzip -mx9 "${{ github.event.inputs.zip_name }}.zip" "${{ github.event.inputs.zip_name }}"/
+          ls
+          7z a -tzip -mx9 ${{ github.event.inputs.zip_name }}.zip ${{ github.event.inputs.zip_name }}/
 
       - name: 上传 ZIP
         uses: ncipollo/release-action@v1.12.0
