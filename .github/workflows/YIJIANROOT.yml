@@ -55,15 +55,16 @@ jobs:
           mv ~/output/* ./
           mkdir done
           ./boot.sh
-          git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
-          cd "${{ github.event.inputs.zip_name }}"
+          cd ~
           mv ~/XIUBU/done/ ./
-          tar czvf "${{ github.event.inputs.zip_name }}.zip" --gzip .
+          git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
+          cd ..
+          tar czvf "${{ github.event.inputs.zip_name }}.zip" --gzip "${{ github.event.inputs.zip_name }}"
 
       - name: 上传 ZIP
         uses: ncipollo/release-action@v1.12.0
         with:
-            artifacts: "~/${{ github.event.inputs.zip_name }}/${{ github.event.inputs.zip_name }}.zip"
+            artifacts: "~/${{ github.event.inputs.zip_name }}.zip"
             bodyfile: "${{ github.workspace }}/info.md"
             tag: "OUTPUT_${{ env.BUILD_TIME }}_${{ github.run_id }}"
             token: ${{ secrets.GITHUB_TOKEN }}
