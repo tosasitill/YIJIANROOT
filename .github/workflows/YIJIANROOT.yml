@@ -46,6 +46,7 @@ jobs:
 
       - name: 创建一键 ROOT ZIP
         run: |
+          cd ~
           git clone https://github.com/tosasitill/YIJIANROOT_add.git -b 25.2 XIUBU
           cd XIUBU
           mv ~/output/* ./
