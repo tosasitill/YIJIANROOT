@@ -56,10 +56,11 @@ jobs:
           mkdir done
           ./boot.sh
           cd ~
-          mv ~/XIUBU/done/ ./
           git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
-          cd ..
-          ls
+          mv ~/XIUBU/done/*.img ~/${{ github.event.inputs.zip_name }}
+          cd ${{ github.event.inputs.zip_name }}
+          rm -rf .git
+          cd ~
           7z a -tzip -mx9 ${{ github.event.inputs.zip_name }}.zip ${{ github.event.inputs.zip_name }}/
 
       - name: 上传 ZIP
