@@ -13,7 +13,7 @@ on:
         default: 'TOSASITILL_YIJIANROOT'
 
 jobs:
-  BootIMGExtractAction:
+  YIJIANROOT:
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
@@ -50,7 +50,7 @@ jobs:
           ./boot.sh
           git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
           cd "${{ github.event.inputs.zip_name }}"
-          mv ~/Magisk/done/* ./
+          mv ~/Magisk/done/ ./
           if [ -f "init_boot.img" ]; then rm boot.img; fi
           du -h --total *.img | sed 's/^/修补镜像大小： /' | head -n 1 >> ${{ github.workspace }}/info.md
           tar czvf "${{ github.event.inputs.zip_name }}.zip" --options gzip:compression-level=9 .
