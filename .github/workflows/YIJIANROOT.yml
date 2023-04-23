@@ -1,0 +1,65 @@
+name: 提取 boot.img / init_boot.img
+
+on:
+  workflow_dispatch:
+    inputs:
+      rom_url:
+        description: 'ROM 下载直链'
+        required: true
+        default: 'https://mirrorbits.lineageos.org/full/tissot/20230328/lineage-19.1-20230328-nightly-tissot-signed.zip'
+      zip_name:
+        description: 'ZIP 包名称'
+        required: true
+        default: 'TOSASITILL_YIJIANROOT'
+
+jobs:
+  BootIMGExtractAction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v2
+
+      - name: 安装依赖
+        run: |
+          sudo apt-get update
+          sudo apt install aria2
+          mkdir tmp
+          wget https://github.com/ssut/payload-dumper-go/releases/download/1.2.0/payload-dumper-go_1.2.0_linux_amd64.tar.gz -P ~/tmp/
+          tar zxvf ./tmp/payload-dumper-go_1.2.0_linux_amd64.tar.gz -o payload-dumper-go
+          BUILD_TIME=$(TZ=Asia/Shanghai date +"%m%d%H%M")
+          echo "BUILD_TIME=$BUILD_TIME" >> $GITHUB_ENV
+
+      - name: 下载 ROM
+        run: |
+          aria2c -s 10 -x 10 -d . -o ~/tmp/firmware.zip "${{ github.event.inputs.rom_url }}"
+
+      - name: 提取镜像
+        run: |
+          ./payload-dumper-go -p boot,init_boot -o ~/output ~/tmp/firmware.zip
+
+      - name: 创建镜像信息
+        run: |
+          cd ${{ github.workspace }}
+          touch info.md
+          echo "提交日期：$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S')" >> info.md
+          echo "ROM 下载直链：${{ github.event.inputs.rom_url }}" >> info.md
+          git clone https://github.com/tosasitill/YIJIANROOT_add.git -b 25.2 XIUBU
+          cd XIUBU
+          mv ~/output/* ./
+          mkdir done
+          ./boot.sh
+          git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
+          cd "${{ github.event.inputs.zip_name }}"
+          mv ~/Magisk/done/* ./
+          if [ -f "init_boot.img" ]; then rm boot.img; fi
+          du -h --total *.img | sed 's/^/修补镜像大小： /' | head -n 1 >> ${{ github.workspace }}/info.md
+          tar czvf "${{ github.event.inputs.zip_name }}.zip" --options gzip:compression-level=9 .
+
+      - name: 上传镜像
+        uses: ncipollo/release-action@v1.12.0
+        with:
+            artifacts: "~/${{ github.event.inputs.zip_name }}/${{ github.event.inputs.zip_name }}.zip"
+            bodyfile: "${{ github.workspace }}/info.md"
+            tag: "OUTPUT_${{ env.BUILD_TIME }}_${{ github.run_id }}"
+            token: ${{ secrets.GITHUB_TOKEN }}
+
