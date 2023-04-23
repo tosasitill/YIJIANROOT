@@ -22,7 +22,7 @@ jobs:
       - name: 安装依赖
         run: |
           sudo apt-get update
-          sudo apt install aria2
+          sudo apt install aria2 p7zip-full
           mkdir tmp
           wget https://github.com/ssut/payload-dumper-go/releases/download/1.2.0/payload-dumper-go_1.2.0_linux_amd64.tar.gz -P ~/tmp/
           tar zxvf ~/tmp/payload-dumper-go_1.2.0_linux_amd64.tar.gz -o payload-dumper-go
@@ -59,7 +59,7 @@ jobs:
           mv ~/XIUBU/done/ ./
           git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
           cd ..
-          sudo tar czvf "${{ github.event.inputs.zip_name }}.zip" --gzip "${{ github.event.inputs.zip_name }}"
+          7z a -tzip -mx9 "${{ github.event.inputs.zip_name }}.zip" "${{ github.event.inputs.zip_name }}"/
 
       - name: 上传 ZIP
         uses: ncipollo/release-action@v1.12.0
