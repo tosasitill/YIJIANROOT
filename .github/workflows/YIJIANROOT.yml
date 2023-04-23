@@ -25,7 +25,7 @@ jobs:
           sudo apt install aria2
           mkdir tmp
           wget https://github.com/ssut/payload-dumper-go/releases/download/1.2.0/payload-dumper-go_1.2.0_linux_amd64.tar.gz -P ~/tmp/
-          tar zxvf ./tmp/payload-dumper-go_1.2.0_linux_amd64.tar.gz -o payload-dumper-go
+          tar zxvf ~/tmp/payload-dumper-go_1.2.0_linux_amd64.tar.gz -o payload-dumper-go
           BUILD_TIME=$(TZ=Asia/Shanghai date +"%m%d%H%M")
           echo "BUILD_TIME=$BUILD_TIME" >> $GITHUB_ENV
 
@@ -35,7 +35,7 @@ jobs:
 
       - name: 提取镜像
         run: |
-          ./payload-dumper-go -p boot,init_boot -o ~/output ~/tmp/firmware.zip
+          ~/payload-dumper-go -p boot,init_boot -o ~/output ~/tmp/firmware.zip
 
       - name: 创建镜像信息
         run: |
