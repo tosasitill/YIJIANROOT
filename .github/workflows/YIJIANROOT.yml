@@ -43,6 +43,9 @@ jobs:
           touch info.md
           echo "提交日期：$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S')" >> info.md
           echo "ROM 下载直链：${{ github.event.inputs.rom_url }}" >> info.md
+
+      - name: 创建一键 ROOT ZIP
+        run: |
           git clone https://github.com/tosasitill/YIJIANROOT_add.git -b 25.2 XIUBU
           cd XIUBU
           mv ~/output/* ./
@@ -50,14 +53,12 @@ jobs:
           ./boot.sh
           git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
           cd "${{ github.event.inputs.zip_name }}"
-          cd ~/Magisk/done/
-          ls
-          mv ~/Magisk/done/ ./
+          mv ~/XIUBU/done/ ./
           if [ -f "init_boot.img" ]; then rm boot.img; fi
           du -h --total *.img | sed 's/^/修补镜像大小： /' | head -n 1 >> ${{ github.workspace }}/info.md
           tar czvf "${{ github.event.inputs.zip_name }}.zip" --options gzip:compression-level=9 .
 
-      - name: 上传镜像
+      - name: 上传 ZIP
         uses: ncipollo/release-action@v1.12.0
         with:
             artifacts: "~/${{ github.event.inputs.zip_name }}/${{ github.event.inputs.zip_name }}.zip"
