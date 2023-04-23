@@ -35,7 +35,7 @@ jobs:
 
       - name: 提取镜像
         run: |
-          ./payload-dumper-go -p boot,init_boot -o ~/output ~/firmware.zip
+          ./payload-dumper-go -p boot,init_boot -o ~/output .//home/runner/firmware.zip
 
       - name: 创建镜像信息
         run: |
