@@ -50,6 +50,8 @@ jobs:
           ./boot.sh
           git clone https://github.com/tosasitill/YIJIANROOT_add.git "${{ github.event.inputs.zip_name }}"
           cd "${{ github.event.inputs.zip_name }}"
+          cd ~/Magisk/done/
+          ls
           mv ~/Magisk/done/ ./
           if [ -f "init_boot.img" ]; then rm boot.img; fi
           du -h --total *.img | sed 's/^/修补镜像大小： /' | head -n 1 >> ${{ github.workspace }}/info.md
