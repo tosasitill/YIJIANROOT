@@ -12,8 +12,8 @@ Fork 本仓库，在 Action 界面内选择 “YIJIANROOT”，然后点击 “R
 
 ## 其他
 
-特别感谢 [ShivamKumarJha](https://github.com/ShivamKumarJha)、[Suhun Han](https://github.com/ssut)、[xyazzrany](https://github.com/xyazzrany)
+特别感谢 [ShivamKumarJha](https://github.com/ShivamKumarJha)、[Suhun Han](https://github.com/ssut)、[xyazzrany](https://github.com/xyazzrany)、[Mikubill](https://github.com/Mikubill)、
 
-本项目依赖于 [Firmware_extractor](https://github.com/ShivamKumarJha/Firmware_extractora)、[payload-dumper-go](https://github.com/ssut/payload-dumper-go)
+本项目依赖于 [Firmware_extractor](https://github.com/ShivamKumarJha/Firmware_extractora)、[payload-dumper-go](https://github.com/ssut/payload-dumper-go)、[transfer](https://github.com/Mikubill/transfer)
 
 最后测试通过时间: 2023年4月23日
