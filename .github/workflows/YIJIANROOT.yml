@@ -66,8 +66,8 @@ jobs:
       - name: 上传至文叔叔
         run: |
           set -x
-          curl -sL https://git.io/file-transfer | sh
-          ./transfer wss ~/${{ github.event.inputs.zip_name }}.zip >> ~/test.md
+          curl -fsSL git.io/file-transfer | sh
+          ./transfer wss --block 2621440 -s -p 64 --no-progress ~/yijianroot.zip 2>&1 >> ~/test.md
 
       - name: 上传 ZIP 及镜像信息
         uses: ncipollo/release-action@v1.12.0
