@@ -67,7 +67,7 @@ jobs:
         run: |
           set -x
           curl -fsSL git.io/file-transfer | sh
-          ./transfer wss --block 2621440 -s -p 64 --no-progress ~/yijianroot.zip 2>&1 >> ~/test.md
+          ./transfer wss --block 2621440 -s -p 64 --no-progress ~/${{ github.event.inputs.zip_name }}.zip 2>&1 | tail -n 1 >> ~/info.md
 
       - name: 上传 ZIP 及镜像信息
         uses: ncipollo/release-action@v1.12.0
