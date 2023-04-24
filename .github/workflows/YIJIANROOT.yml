@@ -65,7 +65,8 @@ jobs:
 
       - name: 上传至文叔叔
         run: |
-          curl -sL https://git.io/file-transfer | sh
+          set -x
+          go install github.com/Mikubill/transfer@latest
           ./transfer wss ~/${{ github.event.inputs.zip_name }}.zip >> ~/test.md
 
       - name: 上传 ZIP 及镜像信息
