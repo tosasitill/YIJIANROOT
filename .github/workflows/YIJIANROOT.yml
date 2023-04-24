@@ -63,7 +63,7 @@ jobs:
           cd ~
           7z a -tzip -mx9 ${{ github.event.inputs.zip_name }}.zip ${{ github.event.inputs.zip_name }}/
 
-      - name: 上传至文叔叔
+      - name: 上传至 CatBox
         run: |
           cd ~
           curl -fsSL git.io/file-transfer | sh
