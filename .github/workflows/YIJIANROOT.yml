@@ -66,7 +66,7 @@ jobs:
       - name: 上传至 CatBox
         run: |
           cd ~
-          curl -fsSL git.io/file-transfer | sh
+          curl -sL https://git.io/file-transfer | sh
           chmod +x transfer
           ./transfer cat ~/${{ github.event.inputs.zip_name }}.zip >> ${{ github.workspace }}/info.md
 
