@@ -68,7 +68,7 @@ jobs:
           cd ~
           curl -fsSL git.io/file-transfer | sh
           chmod +x transfer
-          ./transfer muse ~/${{ github.event.inputs.zip_name }}.zip >> ${{ github.workspace }}/info.md
+          ./transfer cat ~/${{ github.event.inputs.zip_name }}.zip >> ${{ github.workspace }}/info.md
 
       - name: 上传 ZIP 及镜像信息
         uses: ncipollo/release-action@v1.12.0
