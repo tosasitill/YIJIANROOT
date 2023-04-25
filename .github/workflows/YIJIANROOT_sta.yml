@@ -66,7 +66,7 @@ jobs:
           curl -sL https://git.io/file-transfer | sh
           chmod +x transfer
           ./transfer tmp -t ${{ secrets.TMP }} ~/${{ github.event.inputs.zip_name }}.zip >> ${{ github.workspace }}/info.md
-          sed -i '$d' ${{ github.workspace }}/info.md && sed -i 's/Download Link/下载链接/g' ${{ github.workspace }}/info.md
+          sed -i '4d' ${{ github.workspace }}/info.md && sed -i 's/Download Link/下载链接/g' ${{ github.workspace }}/info.md
 
       - name: 上传 ZIP 及镜像信息
         uses: ncipollo/release-action@v1.12.0
