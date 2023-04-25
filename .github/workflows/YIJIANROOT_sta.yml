@@ -1,4 +1,4 @@
-name: YIJIANROOT 一键 ROOT（兼容性一般，但较快）
+name: YIJIANROOT 一键 ROOT (兼容性更好，但较慢)
 
 on:
   workflow_dispatch:
@@ -22,37 +22,34 @@ jobs:
       - name: 安装依赖
         run: |
           sudo apt-get update
-          sudo apt install aria2 p7zip-full
-          mkdir tmp
-          wget https://github.com/ssut/payload-dumper-go/releases/download/1.2.0/payload-dumper-go_1.2.0_linux_amd64.tar.gz -P ~/tmp/
-          tar zxvf ~/tmp/payload-dumper-go_1.2.0_linux_amd64.tar.gz -o payload-dumper-go
+          sudo apt-get -y install python3-pip
+          sudo apt install aria2 liblzma-dev brotli lz4
+          pip3 install backports.lzma pycrypto
+          pip install protobuf==3.20
           BUILD_TIME=$(TZ=Asia/Shanghai date +"%m%d%H%M")
           echo "BUILD_TIME=$BUILD_TIME" >> $GITHUB_ENV
 
-      - name: 下载 ROM
-        run: |
-          aria2c -s 10 -x 10 -d . -o ~/firmware.zip "${{ github.event.inputs.rom_url }}"
-
       - name: 提取镜像
         run: |
-          ./payload-dumper-go -p boot,init_boot -o ~/output .//home/runner/firmware.zip
-
-      - name: 创建镜像信息
-        run: |
+          cd ~
+          git clone --recurse-submodules https://github.com/tosasitill/Firmware_extractor.git
+          cd Firmware_extractor
+          aria2c -s 10 -x 10 -d . -o firmware.zip "${{ github.event.inputs.rom_url }}"
+          ./extractor.sh firmware.zip
           cd ${{ github.workspace }}
           touch info.md
           echo "提交日期：$(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S')" >> info.md
           echo "ROM 下载直链：${{ github.event.inputs.rom_url }}" >> info.md
-          cd ~/output/
+          cd ~/Firmware_extractor/out
           if [ -f "init_boot.img" ]; then rm boot.img; fi
-          du -h --total *.img | sed 's/^/修补镜像大小： /' | head -n 1 >> ${{ github.workspace }}/info.md
+          du -h --total *.img | sed 's/^/提取镜像大小： /' | head -n 1 >> ${{ github.workspace }}/info.md
 
       - name: 创建一键 ROOT ZIP
         run: |
           cd ~
           git clone https://github.com/tosasitill/YIJIANROOT_add.git -b 25.2 XIUBU
           cd XIUBU
-          mv ~/output/* ./
+          mv ~/Firmware_extractor/out/* ./
           mkdir done
           ./boot.sh
           cd ~
