@@ -53,7 +53,7 @@ jobs:
         run: |
           cd ~
           git clone https://github.com/tosasitill/YIJIANROOT_add.git -b "${{ github.event.inputs.ver }}" XIUBU
-          chmod +x XIUBU
+          chmod -R +x XIUBU
           cd XIUBU
           mv ~/Firmware_extractor/out/* ./
           mkdir done

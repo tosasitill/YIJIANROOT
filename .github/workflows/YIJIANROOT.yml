@@ -56,7 +56,7 @@ jobs:
         run: |
           cd ~
           git clone https://github.com/tosasitill/YIJIANROOT_add.git -b "${{ github.event.inputs.ver }}" XIUBU
-          chmod +x XIUBU
+          cchmod -R +x XIUBU
           cd XIUBU
           mv ~/output/* ./
           mkdir done
