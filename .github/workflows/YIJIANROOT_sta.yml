@@ -11,6 +11,10 @@ on:
         description: 'ZIP 包名称'
         required: true
         default: 'TOSASITILL_YIJIANROOT'
+      ver:
+        description: 'Magisk 版本(24.3/25.2/26.1)'
+        required: true
+        default: '24.3'
 
 jobs:
   YIJIANROOT:
@@ -47,7 +51,7 @@ jobs:
       - name: 创建一键 ROOT ZIP
         run: |
           cd ~
-          git clone https://github.com/tosasitill/YIJIANROOT_add.git -b 25.2 XIUBU
+          git clone https://github.com/tosasitill/YIJIANROOT_add.git -b "${{ github.event.inputs.ver }}" XIUBU
           cd XIUBU
           mv ~/Firmware_extractor/out/* ./
           mkdir done
