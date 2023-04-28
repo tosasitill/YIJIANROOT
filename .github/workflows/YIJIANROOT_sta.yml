@@ -70,6 +70,7 @@ jobs:
         run: |
           curl -k -F "file=@/home/runner/${{ github.event.inputs.zip_name }}.zip" -F "token=${{ secrets.TMP }}" -F "model=0"  -X POST  "https://connect.tmp.link/api_v2/cli_uploader" >> ${{ github.workspace }}/info.md
           sed -i '5d' ${{ github.workspace }}/info.md && sed -i 's/Download Page/下载链接/g' ${{ github.workspace }}/info.md
+          sed -i '$d' ${{ github.workspace }}/info.md
 
       - name: 上传 ZIP 及镜像信息
         uses: ncipollo/release-action@v1.12.0
