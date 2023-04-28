@@ -38,8 +38,7 @@ jobs:
 
       - name: 下载 ROM
         run: |
-          final_url=$(curl --max-redirs 10 --retry 3 -I "${{ github.event.inputs.rom_url }}" 2>&1 | grep "location:" | awk '{print $2}' | tail -n 1)
-          aria2c -s 10 -x 10 -d . -o ~/firmware.zip "${final_url}"
+          aria2c -s 10 -x 10 -d . -o ~/firmware.zip "${{ github.event.inputs.rom_url }}"
 
       - name: 提取镜像
         run: |
@@ -77,7 +76,7 @@ jobs:
 
       - name: 上传至 TMP CloudDrive
         run: |
-          curl -k -F "file=@~/${{ github.event.inputs.zip_name }}.zip" -F "token=${{ secrets.TMP }}" -F "model=0"  -X POST "https://connect.tmp.link/api_v2/cli_uploader"
+          curl -k -F "file=@/home/runner/${{ github.event.inputs.zip_name }}.zip" -F "token=${{ secrets.TMP }}" -F "model=0"  -X POST  "https://connect.tmp.link/api_v2/cli_uploader"
           sed -i '5d' ${{ github.workspace }}/info.md && sed -i 's/Download Page/下载链接/g' ${{ github.workspace }}/info.md
 
       - name: 上传 ZIP 及镜像信息
