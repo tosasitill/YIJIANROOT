@@ -26,7 +26,7 @@ jobs:
       - name: 安装依赖
         run: |
           sudo apt-get update
-          sudo apt-get -y install aria2 7z
+          sudo apt-get -y install aria2 p7zip-full
           BUILD_TIME=$(TZ=Asia/Shanghai date +"%m%d%H%M")
           echo "BUILD_TIME=$BUILD_TIME" >> $GITHUB_ENV
 
