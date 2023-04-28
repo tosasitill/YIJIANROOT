@@ -38,7 +38,7 @@ jobs:
 
       - name: 下载 ROM
         run: |
-          aria2c -s 10 -x 10 -d . -o ~/firmware.zip "${{ github.event.inputs.rom_url }}"
+          aria2c -s 10 -x 10 -d . -o .//home/runner/firmware.zip "${{ github.event.inputs.rom_url }}"
 
       - name: 提取镜像
         run: |
