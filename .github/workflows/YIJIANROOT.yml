@@ -26,18 +26,17 @@ jobs:
       - name: 安装依赖
         run: |
           cd ~
-          pwd
-          ls
           sudo apt-get update
           sudo apt install aria2 p7zip-full
-          mkdir tmp
-          wget https://github.com/ssut/payload-dumper-go/releases/download/1.2.0/payload-dumper-go_1.2.0_linux_amd64.tar.gz -P ~/tmp/
-          tar zxvf ~/tmp/payload-dumper-go_1.2.0_linux_amd64.tar.gz -o payload-dumper-go
+          mkdir 1
+          wget https://github.com/ssut/payload-dumper-go/releases/download/1.2.0/payload-dumper-go_1.2.0_linux_amd64.tar.gz -P ~/1/
+          tar zxvf ~/1/payload-dumper-go_1.2.0_linux_amd64.tar.gz -o ~/payload-dumper-go
           BUILD_TIME=$(TZ=Asia/Shanghai date +"%m%d%H%M")
           echo "BUILD_TIME=$BUILD_TIME" >> $GITHUB_ENV
 
       - name: 下载 ROM
         run: |
+          cd ~
           aria2c -s 10 -x 10 -d . -o ~/firmware.zip "${{ github.event.inputs.rom_url }}"
 
       - name: 提取镜像
