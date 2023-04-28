@@ -1,4 +1,4 @@
-name: YIJIANROOT 一键 ROOT (兼容性更好，但较慢)
+name: YIJIANROOT 一键 ROOT（兼容性更好，但较慢）
 
 on:
   workflow_dispatch:
