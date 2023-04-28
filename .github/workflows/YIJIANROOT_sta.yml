@@ -38,7 +38,8 @@ jobs:
           cd ~
           git clone --recurse-submodules https://github.com/tosasitill/Firmware_extractor.git
           cd Firmware_extractor
-          aria2c -s 10 -x 10 -d . -o firmware.zip "${{ github.event.inputs.rom_url }}"
+          final_url=$(curl --max-redirs 10 --retry 3 -I "${{ github.event.inputs.rom_url }}" 2>&1 | grep "location:" | awk '{print $2}' | tail -n 1)
+          aria2c -s 10 -x 10 -d . -o firmware.zip "${final_url}"
           ./extractor.sh firmware.zip
           cd ${{ github.workspace }}
           touch info.md
