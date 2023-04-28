@@ -25,6 +25,9 @@ jobs:
 
       - name: 安装依赖
         run: |
+          cd ~
+          pwd
+          ls
           sudo apt-get update
           sudo apt install aria2 p7zip-full
           mkdir tmp
@@ -69,6 +72,8 @@ jobs:
           rm -rf .git
           cd ~
           7z a -tzip -mx9 ${{ github.event.inputs.zip_name }}.zip ${{ github.event.inputs.zip_name }}/
+          pwd
+          ls
 
       - name: 上传至 TMP CloudDrive
         run: |
